@@ -116,6 +116,7 @@ function getHelpMessage() {
 
 *CREATE (C):*
 • \`tc: Task title\` → Task Create
+• \`tcc: Task title\` → Task Create with Comments (next messages = comments)
 • \`tc: ! Urgent\` → Priority [#A]
 • \`tc: Meeting @2026-02-20\` → Custom date
 • \`cc 2: Comment\` → Comment Create (task 2)

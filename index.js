@@ -5,6 +5,9 @@ import { appendFileSync, existsSync } from 'fs';
 import express from 'express';
 import { config } from './config.js';
 import { processCommand } from './commands.js';
+import { startCommentSession, hasCommentSession, getCommentSession, endCommentSession } from './comment-session.js';
+import { parseOrgFile } from './org-parser.js';
+import { addTaskComment } from './org-editor.js';
 
 // Initialize WhatsApp client with persistent session
 const client = new Client({
@@ -92,9 +95,10 @@ client.on('message_create', async (message) => {
     // Get user ID for caching
     const userId = myNumber;
 
-    // Check if message is a command (CRUD acronyms)
     const lowerText = messageText.toLowerCase();
-    if (lowerText.startsWith('th') ||
+
+    // Check if message is a command (CRUD acronyms) - commands end comment session
+    const isCommand = lowerText.startsWith('th') ||
         lowerText.startsWith('help') ||
         lowerText.startsWith('tl') ||
         lowerText.startsWith('ts') ||
@@ -105,7 +109,32 @@ client.on('message_create', async (message) => {
         lowerText.startsWith('td ') ||
         lowerText.startsWith('cc ') ||
         lowerText.startsWith('cu ') ||
-        lowerText.startsWith('cd ')) {
+        lowerText.startsWith('cd ') ||
+        lowerText.startsWith('tc:') ||
+        lowerText.startsWith('tcc:');
+
+    // If user sends any command, end comment session
+    if (isCommand && hasCommentSession(userId)) {
+      endCommentSession(userId);
+    }
+
+    // Check if user is in comment-adding mode
+    if (!isCommand && hasCommentSession(userId)) {
+      const session = getCommentSession(userId);
+      try {
+        addTaskComment(config.orgFile, session.task, messageText);
+        await chat.sendMessage(`✅ Comment added`);
+        console.log(`✅ Added comment to task: ${messageText.substring(0, 50)}...`);
+        return;
+      } catch (error) {
+        await chat.sendMessage(`❌ Error adding comment: ${error.message}`);
+        endCommentSession(userId);
+        return;
+      }
+    }
+
+    // Check if message is a command (CRUD acronyms)
+    if (isCommand && !lowerText.startsWith('tc:') && !lowerText.startsWith('tcc:')) {
       const response = await processCommand(messageText, userId);
       if (response) {
         // Send reply back to self
@@ -115,7 +144,32 @@ client.on('message_create', async (message) => {
       }
     }
 
-    // Check if message is a task creation command
+    // Check if message is a task creation with comments (tcc:)
+    const tccMatch = messageText.match(/^tcc:\s*(.+)$/i);
+    if (tccMatch) {
+      const taskText = tccMatch[1].trim();
+
+      // Parse and create TODO entry
+      const todoEntry = createTodoEntry(taskText);
+
+      // Append to org file
+      appendToOrgFile(todoEntry);
+
+      console.log(`✅ Created TODO: ${taskText.substring(0, 50)}...`);
+
+      // Parse the org file to get the task we just created
+      const todos = parseOrgFile(config.orgFile);
+      const createdTask = todos[todos.length - 1]; // Get the last task (just created)
+
+      // Start comment session
+      startCommentSession(userId, createdTask);
+
+      // Send confirmation
+      await chat.sendMessage(`✅ Task created: "${taskText}"\n\n💬 Now send messages to add comments. Any command will exit comment mode.`);
+      return;
+    }
+
+    // Check if message is a task creation command (tc:)
     const taskMatch = messageText.match(/^tc:\s*(.+)$/i);
     if (taskMatch) {
       const taskText = taskMatch[1].trim();
