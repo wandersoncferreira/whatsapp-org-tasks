@@ -1,16 +1,17 @@
 {
   "name": "whatsapp-org-tasks",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Create and manage Emacs org-mode TODO tasks from WhatsApp messages",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "test": "node test/test-crud.js && node test/test-tcc.js && node test/test-heading-level.js",
+    "test": "node test/test-crud.js && node test/test-tcc.js && node test/test-heading-level.js && node test/test-date-parser.js",
     "test:crud": "node test/test-crud.js",
     "test:tcc": "node test/test-tcc.js",
     "test:heading": "node test/test-heading-level.js",
+    "test:date-parser": "node test/test-date-parser.js",
     "test:date": "node test/test-date-filtering.js",
     "test:commands": "node test/test-commands.js",
     "test:manual": "node test/test.js"

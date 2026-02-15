@@ -11,6 +11,7 @@ import {
   updateTaskComment,
   deleteTaskComment
 } from './org-editor.js';
+import { parseDate } from './date-parser.js';
 
 /**
  * Process command and return response
@@ -67,11 +68,11 @@ export async function processCommand(messageText, userId = 'default') {
     return await changeStatus(userId, parseInt(index), newStatus);
   }
 
-  // Task Scheduled Date: "tsd 2: 2026-02-20"
-  const taskDateMatch = originalText.match(/^tsd\s+(\d+):\s*(\d{4}-\d{2}-\d{2})$/i);
+  // Task Scheduled Date: "tsd 2: today" or "tsd 2: 2026-02-20"
+  const taskDateMatch = originalText.match(/^tsd\s+(\d+):\s*(.+)$/i);
   if (taskDateMatch) {
     const [, index, newDate] = taskDateMatch;
-    return await changeDate(userId, parseInt(index), newDate);
+    return await changeDate(userId, parseInt(index), newDate.trim());
   }
 
   // Task Delete: "td 2"
@@ -118,7 +119,9 @@ function getHelpMessage() {
 • \`tc: Task title\` → Task Create
 • \`tcc: Task title\` → Task Create with Comments (next messages = comments)
 • \`tc: ! Urgent\` → Priority [#A]
-• \`tc: Meeting @2026-02-20\` → Custom date
+• \`tc: Meeting @tomorrow\` → Natural language date
+• \`tc: Call John @next monday\` → Next Monday
+• \`tc: Review @2026-02-20\` → Specific date
 • \`cc 2: Comment\` → Comment Create (task 2)
 
 *READ (R):*
@@ -133,7 +136,9 @@ function getHelpMessage() {
 *UPDATE (U):*
 • \`tu 2: New title\` → Task Update title
 • \`tst 2: DONE\` → Task STate change
-• \`tsd 2: 2026-02-20\` → Task Scheduled Date
+• \`tsd 2: tomorrow\` → Task Scheduled Date (natural language)
+• \`tsd 2: next friday\` → Task Scheduled Date (next Friday)
+• \`tsd 2: 2026-02-20\` → Task Scheduled Date (specific)
 • \`cu 2 1: Updated\` → Comment Update (task 2, comment 1)
 
 *DELETE (D):*
@@ -461,13 +466,14 @@ async function changeDate(userId, index, newDate) {
       return `❌ Task ${index} not found. Please list tasks first.`;
     }
 
-    // Validate date format
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
-      return `❌ Invalid date format. Use YYYY-MM-DD (e.g., 2026-02-20)`;
+    // Parse natural language date
+    const parsedDate = parseDate(newDate);
+    if (!parsedDate) {
+      return `❌ Invalid date format. Use: today, tomorrow, today+3, next monday, or YYYY-MM-DD`;
     }
 
-    changeScheduledDate(config.orgFile, task, newDate);
-    return `✅ Changed task ${index} scheduled date to: ${newDate}`;
+    changeScheduledDate(config.orgFile, task, parsedDate);
+    return `✅ Changed task ${index} scheduled date to: ${parsedDate}`;
   } catch (error) {
     return `❌ Error changing date: ${error.message}`;
   }

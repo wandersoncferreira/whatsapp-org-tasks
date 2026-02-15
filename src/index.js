@@ -8,6 +8,7 @@ import { processCommand } from './commands.js';
 import { startCommentSession, hasCommentSession, getCommentSession, endCommentSession } from './comment-session.js';
 import { parseOrgFile } from './org-parser.js';
 import { addTaskComment } from './org-editor.js';
+import { extractDate } from './date-parser.js';
 
 // Initialize WhatsApp client with persistent session
 const client = new Client({
@@ -216,11 +217,11 @@ function createTodoEntry(messageText) {
       content = content.substring(1).trim();
     }
 
-    // Parse scheduled date (@YYYY-MM-DD)
-    const dateMatch = content.match(/@(\d{4}-\d{2}-\d{2})/);
-    if (dateMatch) {
-      scheduled = `\nSCHEDULED: <${dateMatch[1]}>`;
-      content = content.replace(dateMatch[0], '').trim();
+    // Parse scheduled date with natural language support
+    const dateExtraction = extractDate(content);
+    if (dateExtraction.date) {
+      scheduled = `\nSCHEDULED: <${dateExtraction.date}>`;
+      content = dateExtraction.text;
     }
   }
 

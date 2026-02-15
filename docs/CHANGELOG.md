@@ -1,5 +1,23 @@
 # Changelog
 
+## v3.2 (2026-02-15)
+
+### New Features
+- **Natural language dates**: Support for human-friendly date formats
+  - `@today`, `@tomorrow` - Relative dates
+  - `@today+3`, `@today+7` - Days from today
+  - `@next monday`, `@next friday` - Next weekday
+  - `@this saturday` - This week's weekday
+  - `@in 5 days` - Days from now
+  - `@2026-02-20` - ISO dates (still supported)
+  - Works in task creation (`tc:`, `tcc:`) and date changes (`tsd`)
+  - Case insensitive
+
+### Testing
+- Added 40 comprehensive tests for date parsing
+- All date formats validated
+- Total: 115 tests, 100% pass rate
+
 ## v3.1 (2026-02-15)
 
 ### New Features
