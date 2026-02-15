@@ -5,7 +5,7 @@
  * Usage: node test-commands.js
  */
 
-import { processCommand } from './commands.js';
+import { processCommand } from '../src/commands.js';
 
 const testCommands = [
   // Help commands

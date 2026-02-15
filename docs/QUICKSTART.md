@@ -43,4 +43,4 @@ tc: ! Important @2026-03-20     # Both
 ./manage.sh logs
 ```
 
-See [README.md](README.md) for full documentation.
+See [README.md](../README.md) for full documentation.

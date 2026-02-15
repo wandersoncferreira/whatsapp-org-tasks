@@ -6,10 +6,10 @@
  * Usage: node test-crud.js
  */
 
-import { processCommand } from './commands.js';
-import { parseOrgFile, filterByDate } from './org-parser.js';
-import { config } from './config.js';
-import { cacheTasksForUser, getTaskFromCache, clearCacheForUser } from './task-cache.js';
+import { processCommand } from '../src/commands.js';
+import { parseOrgFile, filterByDate } from '../src/org-parser.js';
+import { config } from '../src/config.js';
+import { cacheTasksForUser, getTaskFromCache, clearCacheForUser } from '../src/task-cache.js';
 import {
   editTaskTitle,
   addTaskComment,
@@ -19,7 +19,7 @@ import {
   getTaskComments,
   updateTaskComment,
   deleteTaskComment
-} from './org-editor.js';
+} from '../src/org-editor.js';
 import { writeFileSync, readFileSync, copyFileSync, unlinkSync, existsSync } from 'fs';
 
 // Test counters

@@ -1,0 +1,74 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Create .env file for testing
+      run: |
+        echo "MY_PHONE_NUMBER=5500000000000" >> .env
+        echo "ORG_FILE_PATH=/tmp/test-tasks.org" >> .env
+        echo "HTTP_PORT=3042" >> .env
+        echo "HEADING_LEVEL=2" >> .env
+
+    - name: Create test org file
+      run: |
+        mkdir -p /tmp
+        cat > /tmp/test-tasks.org << 'EOF'
+        * Tasks
+        ** TODO Test Task 1
+        SCHEDULED: <2026-02-15>
+        :PROPERTIES:
+        :CREATED: [2026-02-15 10:00:00]
+        :SOURCE: WhatsApp
+        :END:
+
+        ** TODO [#A] Test Task 2
+        SCHEDULED: <2026-02-16>
+        :PROPERTIES:
+        :CREATED: [2026-02-15 11:00:00]
+        :SOURCE: WhatsApp
+        :END:
+
+        ** DONE Test Task 3
+        CLOSED: [2026-02-15 15:00:00]
+        SCHEDULED: <2026-02-15>
+        :PROPERTIES:
+        :CREATED: [2026-02-15 12:00:00]
+        :SOURCE: WhatsApp
+        :END:
+        EOF
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run CRUD tests
+      run: npm run test:crud
+
+    - name: Run TCC tests
+      run: npm run test:tcc
+
+    - name: Run heading level tests
+      run: npm run test:heading
+
+    - name: All tests
+      run: npm test

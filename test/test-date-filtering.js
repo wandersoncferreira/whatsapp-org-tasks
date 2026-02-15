@@ -4,8 +4,8 @@
  * Test date filtering to diagnose "list today" issues
  */
 
-import { parseOrgFile, filterByDate } from './org-parser.js';
-import { config } from './config.js';
+import { parseOrgFile, filterByDate } from '../src/org-parser.js';
+import { config } from '../src/config.js';
 
 console.log('🧪 Testing Date Filtering\n');
 console.log('='.repeat(70));

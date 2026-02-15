@@ -4,7 +4,7 @@
  * Test that tasks are created with correct heading level
  */
 
-import { config } from './config.js';
+import { config } from '../src/config.js';
 import { writeFileSync, readFileSync, unlinkSync } from 'fs';
 
 console.log('🧪 Testing Task Heading Level\n');

@@ -104,4 +104,4 @@ After configuration, you can run as a service:
 ./manage.sh logs
 ```
 
-See [README.md](README.md) for full documentation.
+See [README.md](../README.md) for full documentation.

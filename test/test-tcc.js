@@ -4,9 +4,9 @@
  * Test TCC (Task Create with Comments) functionality
  */
 
-import { startCommentSession, hasCommentSession, getCommentSession, endCommentSession, clearAllSessions } from './comment-session.js';
-import { parseOrgFile } from './org-parser.js';
-import { addTaskComment } from './org-editor.js';
+import { startCommentSession, hasCommentSession, getCommentSession, endCommentSession, clearAllSessions } from '../src/comment-session.js';
+import { parseOrgFile } from '../src/org-parser.js';
+import { addTaskComment } from '../src/org-editor.js';
 import { writeFileSync, readFileSync, unlinkSync, existsSync } from 'fs';
 
 console.log('🧪 Testing TCC (Task Create with Comments)\n');

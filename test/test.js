@@ -6,7 +6,7 @@
  */
 
 import { appendFileSync, existsSync } from 'fs';
-import { config } from './config.js';
+import { config } from '../src/config.js';
 
 function createTodoEntry(messageText) {
   let priority = '';

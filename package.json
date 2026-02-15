@@ -1,21 +1,41 @@
 {
   "name": "whatsapp-org-tasks",
-  "version": "1.0.0",
-  "description": "Create Emacs org-mode TODO tasks from WhatsApp messages",
-  "main": "index.js",
+  "version": "3.1.0",
+  "description": "Create and manage Emacs org-mode TODO tasks from WhatsApp messages",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js"
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node test/test-crud.js && node test/test-tcc.js && node test/test-heading-level.js",
+    "test:crud": "node test/test-crud.js",
+    "test:tcc": "node test/test-tcc.js",
+    "test:heading": "node test/test-heading-level.js",
+    "test:date": "node test/test-date-filtering.js",
+    "test:commands": "node test/test-commands.js",
+    "test:manual": "node test/test.js"
   },
   "keywords": [
     "whatsapp",
     "org-mode",
     "emacs",
-    "todo"
+    "todo",
+    "task-management",
+    "productivity"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/whatsapp-org-tasks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/whatsapp-org-tasks/issues"
+  },
+  "homepage": "https://github.com/yourusername/whatsapp-org-tasks#readme",
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^4.18.2",

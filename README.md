@@ -1,5 +1,9 @@
 # WhatsApp to Org-Mode Tasks
 
+![Tests](https://github.com/yourusername/whatsapp-org-tasks/workflows/Tests/badge.svg)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 Create and manage Emacs org-mode TODO tasks via WhatsApp messages to yourself.
 
 ## Features
@@ -28,7 +32,7 @@ npm start
 
 Scan QR code with WhatsApp → Send yourself a message → Task created!
 
-See [SETUP.md](SETUP.md) for detailed setup instructions.
+See [SETUP.md](docs/SETUP.md) for detailed setup instructions.
 
 ## Configuration
 
@@ -134,13 +138,15 @@ node test-date-filtering.js    # Date diagnostics
 
 ## Documentation
 
-- [SETUP.md](SETUP.md) - Detailed setup instructions
-- [CRUD_REFERENCE.md](CRUD_REFERENCE.md) - Complete command reference
-- [QUICKSTART.md](QUICKSTART.md) - Quick reference
-- [MIGRATION.md](MIGRATION.md) - Migration from v2.0
-- [TESTING.md](TESTING.md) - Testing documentation
-- [CHANGELOG.md](CHANGELOG.md) - Version history
-- [TCC_GUIDE.md](TCC_GUIDE.md) - TCC command guide
+- [SETUP.md](docs/SETUP.md) - Detailed setup instructions
+- [CRUD_REFERENCE.md](docs/CRUD_REFERENCE.md) - Complete command reference
+- [QUICKSTART.md](docs/QUICKSTART.md) - Quick reference
+- [TCC_GUIDE.md](docs/TCC_GUIDE.md) - TCC command guide
+- [EXAMPLES.md](docs/EXAMPLES.md) - Usage examples
+- [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) - Project organization
+- [TESTING.md](docs/TESTING.md) - Testing documentation
+- [MIGRATION.md](docs/MIGRATION.md) - Migration from v2.0
+- [CHANGELOG.md](docs/CHANGELOG.md) - Version history
 
 ## Running as Service
 
