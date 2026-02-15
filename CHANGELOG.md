@@ -8,6 +8,13 @@
   - Any command exits comment mode
   - Auto-cleanup old sessions after 1 hour
 
+### Security Improvements
+- **Environment variables**: Moved sensitive data to `.env` file
+  - Phone number no longer in repository
+  - Org file path no longer in repository
+  - Added `.env.example` as template
+  - Added validation for required variables
+
 ### Code Cleanup
 - Removed obsolete files (test-editing.js, test-phone-config.js, old CHANGELOG.md, PHONE-NUMBER-FIX.md)
 - Removed `triggerKeywords` backward compatibility code

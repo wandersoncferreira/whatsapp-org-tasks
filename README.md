@@ -21,24 +21,37 @@ Create and manage Emacs org-mode TODO tasks via WhatsApp messages to yourself.
 
 ```bash
 npm install
+cp .env.example .env
+# Edit .env with your phone number and org file path
 npm start
 ```
 
 Scan QR code with WhatsApp → Send yourself a message → Task created!
 
+See [SETUP.md](SETUP.md) for detailed setup instructions.
+
 ## Configuration
 
-Edit `config.js`:
+Create a `.env` file (copy from `.env.example`):
 
-```javascript
-export const config = {
-  orgFile: '/path/to/tasks.org',
-  myPhoneNumber: '5511966428772',  // Required: your number
-  headingLevel: 2,                  // 1=*, 2=**, 3=***
-  defaultScheduledDays: 0,          // 0=today, 1=tomorrow, null=none
-  parseSpecialSyntax: true,         // Enable ! and @
-  httpPort: 3042
-};
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```bash
+# Required
+MY_PHONE_NUMBER=5511987898761
+ORG_FILE_PATH=/Users/username/Documents/notes/tasks.org
+
+# Optional (with defaults shown)
+HTTP_PORT=3042
+HEADING_LEVEL=2
+DEFAULT_SCHEDULED_DAYS=0
+PARSE_SPECIAL_SYNTAX=true
+INCLUDE_TIMESTAMP=true
+TODO_STATE=TODO
 ```
 
 ## Commands
@@ -121,7 +134,9 @@ node test-date-filtering.js    # Date diagnostics
 
 ## Documentation
 
+- [SETUP.md](SETUP.md) - Detailed setup instructions
 - [CRUD_REFERENCE.md](CRUD_REFERENCE.md) - Complete command reference
+- [QUICKSTART.md](QUICKSTART.md) - Quick reference
 - [MIGRATION.md](MIGRATION.md) - Migration from v2.0
 - [TESTING.md](TESTING.md) - Testing documentation
 - [CHANGELOG.md](CHANGELOG.md) - Version history

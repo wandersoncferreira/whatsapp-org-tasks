@@ -53,7 +53,9 @@ tl
 
 ## Configuration
 
-Edit `config.js`:
-- `headingLevel: 2` - Heading level for tasks (1=*, 2=**, 3=***)
-- `defaultScheduledDays: 0` - Auto-schedule (0=today, 1=tomorrow, null=none)
-- `parseSpecialSyntax: true` - Enable ! and @ parsing
+Edit `.env` file:
+- `MY_PHONE_NUMBER` - Your WhatsApp number (required)
+- `ORG_FILE_PATH` - Path to org file (required)
+- `HEADING_LEVEL=2` - Heading level (1=*, 2=**, 3=***)
+- `DEFAULT_SCHEDULED_DAYS=0` - Auto-schedule (0=today, 1=tomorrow, null=none)
+- `PARSE_SPECIAL_SYNTAX=true` - Enable ! and @ parsing

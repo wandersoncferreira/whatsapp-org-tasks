@@ -10,9 +10,10 @@ npm start
 
 ## First Time Setup
 
-1. Scan QR code with WhatsApp (Settings → Linked Devices)
-2. Update `config.js` with your phone number
-3. Message yourself on WhatsApp
+1. Copy `.env.example` to `.env`
+2. Edit `.env` with your phone number and org file path
+3. Scan QR code with WhatsApp (Settings → Linked Devices)
+4. Message yourself on WhatsApp
 
 ## Commands Cheat Sheet
 
