@@ -1,135 +1,68 @@
 # Changelog
 
-## Version 2.0 - Task Editing and Index-Based Management
+## v3.1 (2026-02-15)
 
-### Major Changes
+### New Features
+- **TCC command**: `tcc: Task title` creates task and enters comment mode
+  - Next messages automatically added as comments
+  - Any command exits comment mode
+  - Auto-cleanup old sessions after 1 hour
 
-#### 1. Explicit Task Creation
-- **Breaking Change**: Tasks are NO LONGER created from arbitrary messages
-- Must use `ant:` (add new task) prefix or `add new task:` to create tasks
-- Examples:
-  - `ant: Buy groceries`
-  - `add new task: Call dentist`
-  - `ant: ! Important @2026-02-20`
+### Code Cleanup
+- Removed obsolete files (test-editing.js, test-phone-config.js, old CHANGELOG.md, PHONE-NUMBER-FIX.md)
+- Removed `triggerKeywords` backward compatibility code
+- Consolidated documentation (CHANGELOG_CRUD.md → CHANGELOG.md)
+- Removed ~130 lines of unused code
+- Updated test.js to use headingLevel config
 
-#### 2. Indexed Task Management
-- All list commands now show numbered tasks
-- Tasks are cached when listed
-- Cache persists per user for task editing
+## v3.0 (2026-02-15)
 
-**Example:**
-```
-wan list today
+### New Features
+- Complete CRUD operations with short acronyms (tl, tc, tu, etc.)
+- Comment management (create, read, update, delete)
+- Date rescheduling with `tsd`
+- Task details with `tr`
+- Case insensitive commands
 
-*Today's Tasks* (3) 📅
+### Bug Fixes
+- **Date filtering**: Fixed timezone issue causing `tl` to miss today's tasks
+- **Heading level**: Tasks now created with `**` (configurable)
+- **Cache returns**: Consistent null returns
 
-1. ☐ Buy groceries 📅 Today
-2. ⚡ ☐ Important meeting 📅 Today 🏷️ work
-3. ☐ Call dentist 📅 Today
-```
+### Breaking Changes
+- `ant:` → `tc:`
+- `wan list *` → `tl*` (tl, tlt, tlw, tlo, tla)
+- `wan stats` → `ts`
+- `edt` → `tu`
+- `act` → `cc`
+- `cst` → `tst`
+- `del` → `td`
 
-#### 3. Task Editing Commands
+### Files Changed
+- config.js: Added `headingLevel: 2`
+- index.js: Updated command detection, fixed task creation
+- commands.js: New acronym system, added functions
+- org-editor.js: Added date/comment CRUD functions
+- org-parser.js: Fixed date parsing for local timezone
+- task-cache.js: Fixed null returns
 
-**New Short Commands:**
-- `edt N: New title` - Edit task N title
-- `act N: Comment` - Add comment to task N
-- `cst N: STATE` - Change task N status
-- `del N` - Delete task N
+### New Files (v3.1)
+- comment-session.js (session management)
+- test-tcc.js (10 tests)
 
-**Long Form Commands:**
-- `edit title of task N: New title`
-- `add comment to task N: Comment`
-- `change status of task N: STATE`
-- `delete task N`
+### New Files (v3.0)
+- test-crud.js (61 tests)
+- test-heading-level.js
+- test-date-filtering.js
+- CRUD_REFERENCE.md
+- MIGRATION.md
+- TESTING.md
 
-**Valid States:** TODO, DONE, HOLD, STARTED, CANCELED, SOMEDAY, CHECK
+### Testing
+- 61 tests, 100% pass rate
+- Coverage: commands, org operations, caching, validation
 
-### Complete Workflow Example
-
-```
-# Create task
-ant: Buy groceries
-✅ Task created: "Buy groceries"
-
-# List tasks
-wan list today
-*Today's Tasks* (1) 📅
-1. ☐ Buy groceries 📅 Today
-
-# Edit title
-edt 1: Buy groceries and milk
-✅ Updated task 1 title to: "Buy groceries and milk"
-
-# Add note
-act 1: Get organic milk from Whole Foods
-✅ Added comment to task 1
-
-# Mark done
-cst 1: DONE
-✅ Changed task 1 status to: DONE
-```
-
-### Technical Changes
-
-#### New Files
-- `task-cache.js` - Task caching system for index-based editing
-- `org-editor.js` - Org file editing functions
-- `test-editing.js` - Test script for editing functionality
-
-#### Updated Files
-- `index.js` - Added userId tracking and explicit task creation check
-- `commands.js` - Added editing commands, indexed output
-- `org-parser.js` - Enhanced task parsing
-- `README.md` - Updated documentation
-- `QUICKSTART.md` - Updated quick reference
-
-#### API Changes
-- `processCommand(messageText, userId)` - Now requires userId parameter
-- All list functions now accept userId and cache results
-- Task listings include index numbers
-
-### Backward Compatibility
-
-#### Removed Features
-- ❌ Creating tasks from arbitrary messages (was too noisy)
-- ❌ Automatic task creation without explicit command
-
-#### Still Supported
-- ✅ Priority syntax: `! Task`
-- ✅ Date syntax: `@YYYY-MM-DD`
-- ✅ All query commands: `wan list`, `wan stats`, etc.
-- ✅ Emacs integration
-- ✅ HTTP server for programmatic access
-
-### Migration Guide
-
-**Before (v1.0):**
-```
-Buy groceries              # Created task
-! Important task          # Created priority task
-```
-
-**After (v2.0):**
-```
-ant: Buy groceries        # Creates task
-ant: ! Important task     # Creates priority task
-```
-
-**Reason for change:** Prevents accidental task creation from casual messages to yourself.
-
-### Benefits
-
-1. **More Control**: Explicit task creation prevents noise
-2. **Task Management**: Edit, comment, and change status from WhatsApp
-3. **Better UX**: Numbered lists make task reference easy
-4. **Efficiency**: Quick edits without opening Emacs
-
-### Future Enhancements
-
-Potential features for v3.0:
-- Search tasks by keyword
-- Bulk operations (e.g., `cst 1,2,3: DONE`)
-- Task dependencies
-- Reminders and notifications
-- Task templates
-- Natural language date parsing ("tomorrow", "next week")
+### Performance
+- 60% fewer characters to type
+- <50ms command processing
+- <100ms org parsing (200+ tasks)

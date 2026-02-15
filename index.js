@@ -187,20 +187,6 @@ client.on('message_create', async (message) => {
       return;
     }
 
-    // Check trigger keywords if configured (for backward compatibility)
-    if (config.triggerKeywords.length > 0) {
-      const hasKeyword = config.triggerKeywords.some(keyword =>
-        messageText.toLowerCase().includes(keyword.toLowerCase())
-      );
-      if (hasKeyword) {
-        // Parse and create TODO entry
-        const todoEntry = createTodoEntry(messageText);
-        appendToOrgFile(todoEntry);
-        console.log(`✅ Created TODO: ${messageText.substring(0, 50)}...`);
-        await chat.sendMessage(`✅ Task created: "${messageText}"`);
-      }
-    }
-
   } catch (error) {
     console.error('❌ Error processing message:', error);
   }

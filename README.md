@@ -124,7 +124,8 @@ node test-date-filtering.js    # Date diagnostics
 - [CRUD_REFERENCE.md](CRUD_REFERENCE.md) - Complete command reference
 - [MIGRATION.md](MIGRATION.md) - Migration from v2.0
 - [TESTING.md](TESTING.md) - Testing documentation
-- [CHANGELOG_CRUD.md](CHANGELOG_CRUD.md) - Version history
+- [CHANGELOG.md](CHANGELOG.md) - Version history
+- [TCC_GUIDE.md](TCC_GUIDE.md) - TCC command guide
 
 ## Running as Service
 

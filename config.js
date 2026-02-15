@@ -10,10 +10,6 @@ export const config = {
   // Example: '5511966428772' for +55 11 96642-8772
   myPhoneNumber: '5511966428772',
 
-  // Optional: Keywords that trigger TODO creation (leave empty to process all self-messages)
-  // Example: ['todo', 'task', 'remind']
-  triggerKeywords: [],
-
   // Default TODO state
   todoState: 'TODO',
 

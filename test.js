@@ -36,8 +36,9 @@ function createTodoEntry(messageText) {
     scheduled = `\nSCHEDULED: <${dateStr}>`;
   }
 
-  // Build org entry
-  let entry = `\n* ${config.todoState}${priority} ${content}`;
+  // Build org entry with configured heading level
+  const stars = '*'.repeat(config.headingLevel || 1);
+  let entry = `\n${stars} ${config.todoState}${priority} ${content}`;
 
   if (scheduled) {
     entry += scheduled;
