@@ -157,6 +157,42 @@ test('parseDate("today+1") returns tomorrow', () => {
   assertEqual(result, expected, `Expected ${expected}, got ${result}`);
 });
 
+test('parseDate("today+2") returns 2 days from now', () => {
+  const result = parseDate('today+2');
+  const expected = getDaysFromNowStr(2);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
+test('parseDate("today+5") returns 5 days from now', () => {
+  const result = parseDate('today+5');
+  const expected = getDaysFromNowStr(5);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
+test('parseDate("today+10") returns 10 days from now', () => {
+  const result = parseDate('today+10');
+  const expected = getDaysFromNowStr(10);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
+test('parseDate("today+30") returns 30 days from now', () => {
+  const result = parseDate('today+30');
+  const expected = getDaysFromNowStr(30);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
+test('parseDate("today+100") returns 100 days from now', () => {
+  const result = parseDate('today+100');
+  const expected = getDaysFromNowStr(100);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
+test('parseDate("today+365") returns 365 days from now', () => {
+  const result = parseDate('today+365');
+  const expected = getDaysFromNowStr(365);
+  assertEqual(result, expected, `Expected ${expected}, got ${result}`);
+});
+
 test('parseDate("in 5 days") returns 5 days from now', () => {
   const result = parseDate('in 5 days');
   const expected = getDaysFromNowStr(5);
@@ -238,6 +274,18 @@ test('extractDate("Task @today+3") extracts relative date', () => {
   const result = extractDate('Task @today+3');
   assertEqual(result.text, 'Task');
   assertEqual(result.date, getDaysFromNowStr(3));
+});
+
+test('extractDate("Task @today+10") works with double digit numbers', () => {
+  const result = extractDate('Task @today+10');
+  assertEqual(result.text, 'Task');
+  assertEqual(result.date, getDaysFromNowStr(10));
+});
+
+test('extractDate("Task @today+100") works with triple digit numbers', () => {
+  const result = extractDate('Task @today+100');
+  assertEqual(result.text, 'Task');
+  assertEqual(result.date, getDaysFromNowStr(100));
 });
 
 test('extractDate("#tomorrow urgent meeting") supports # syntax', () => {

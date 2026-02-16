@@ -1,11 +1,12 @@
 /**
  * Natural language date parser
- * Supports: today, tomorrow, today+N, next <weekday>, YYYY-MM-DD
+ * Supports: today, tomorrow, today+N (where N is any number), next <weekday>, YYYY-MM-DD
  */
 
 /**
  * Parse natural language date to YYYY-MM-DD format
- * @param {string} dateStr - Date string (e.g., "today", "tomorrow", "today+3", "next monday", "2026-02-20")
+ * @param {string} dateStr - Date string (e.g., "today", "tomorrow", "today+N", "next monday", "2026-02-20")
+ *                          Note: N can be any positive integer (1, 2, 5, 10, 30, 100, etc.)
  * @returns {string|null} - Date in YYYY-MM-DD format or null if invalid
  */
 export function parseDate(dateStr) {
@@ -194,8 +195,10 @@ export function getDateExamples() {
   return [
     { input: 'today', description: 'Today' },
     { input: 'tomorrow', description: 'Tomorrow' },
+    { input: 'today+1', description: '1 day from today' },
     { input: 'today+3', description: '3 days from today' },
-    { input: 'today +7', description: '7 days from today' },
+    { input: 'today+7', description: '7 days from today' },
+    { input: 'today+30', description: '30 days from today (any number N works)' },
     { input: 'next monday', description: 'Next Monday' },
     { input: 'next friday', description: 'Next Friday' },
     { input: 'this saturday', description: 'This Saturday' },
